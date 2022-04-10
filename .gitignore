@@ -1,7 +1,10 @@
 node_modules
 node_modules_volume
 docker/mysql/env
+docker/mysql/data
+
+dist
+htdocs
 
 memo
-
 !.gitkeep
