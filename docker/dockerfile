@@ -1,28 +1,22 @@
 FROM httpd:2.4
- 
 WORKDIR /app
- 
-# node.jsなどをインストール
+
 RUN apt-get update \
- && apt-get -y install --no-install-recommends \
-    nodejs \
-    npm \
-    curl \
- # キャッシュ削除
- && apt-get clean
- 
-# node.jsを最新にする
-RUN npm install -g n \
- && n stable \
- && apt purge -y \
+&& apt-get -y install --no-install-recommends \
+nodejs \
+npm \
+curl \
+&& apt-get clean
+
+RUN npm install -g n && n stable \
+&& apt purge -y \
     nodejs \
     npm
- 
-# Vue.jsとCLIインストール
+
 RUN ["/bin/bash", "-c", " \
     source ~/.bashrc \
-     && npm install vue \
-     && npm install -g @vue/cli \
- "]
- 
+    && npm install vue \
+    && npm install -g @vue/cli \
+"]
+
 EXPOSE 80 8080
