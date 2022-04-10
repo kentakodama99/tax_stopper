@@ -1,0 +1,29 @@
+version: '3.8'
+volumes:
+    node_modules_volume:
+
+services:
+    vue:
+        container_name: tax_stopper
+        build: ./docker/
+        ports:
+            - 80:80
+            - 8080:8080
+        privileged: true
+        volumes:
+            - ./src:/app
+            - ./src/node_modules_volume:/app/node_modules
+            - ./htdocs:/usr/local/apache2/htdocs/
+        environment:
+            TZ: 'Asia/Tokyo'
+        tty: true
+        stdin_open: true
+    db:
+        container_name: tax_stopper_db
+        build: ./docker/mysql
+        ports:
+            - 3306:3306
+        volumes:
+            - ./docker/mysql/data:/var/lib/mysql
+        env_file:
+            - ./docker/mysql/env
