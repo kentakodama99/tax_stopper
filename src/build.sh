@@ -22,8 +22,8 @@ cd $CURRENT
 echo -e "\nRun build...\n"
 npm run build
 
-checkDir dist
-cd dist
+checkDir docs
+cd docs
 
 cp -a * /usr/local/apache2/htdocs/
 echo "Build completed"
