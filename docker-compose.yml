@@ -13,7 +13,7 @@ services:
         volumes:
             - ./src:/app
             - ./src/node_modules_volume:/app/node_modules
-            - ./htdocs:/usr/local/apache2/htdocs/
+            - ./docs:/usr/local/apache2/htdocs/
         environment:
             TZ: 'Asia/Tokyo'
         tty: true
