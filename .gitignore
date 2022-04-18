@@ -4,7 +4,6 @@ docker/mysql/env
 docker/mysql/data
 
 dist
-htdocs
 
 memo
 !.gitkeep
