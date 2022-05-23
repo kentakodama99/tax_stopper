@@ -6,6 +6,7 @@ module.exports = defineConfig({
 })
 module.exports = {
   outputDir: 'docs',
-  publicPath: "./",
-  assetsDir: "./"
+  assetsDir: "./",
+  // publicPath: "./",
+  publicPath: "/tax_stopper", // gitpage deploy
 }
