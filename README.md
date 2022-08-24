@@ -37,6 +37,3 @@ income1 INT DEFAULT 0,
 income2 INT DEFAULT 0,
 PRIMARY KEY(year, month)
 ```
-
-### FastApi
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
