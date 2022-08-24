@@ -17,14 +17,14 @@ services:
         stdin_open: true
     db:
         container_name: tax_stopper_db
-        image: mysql:5.7
+        build: ./docker/mysql
         ports:
             - 3306:3306
         volumes:
             - ./docker/mysql/data:/var/lib/mysql
             - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
         env_file:
-            - ./docker/mysql/env
+            - ./docker/env
 
     py:
         container_name: tax_stopper_backend
@@ -32,21 +32,22 @@ services:
         ports:
             - 8000:8000
         volumes:
-            - ./src/backend:/py/src
+            - ./src/backend:/py/
         env_file:
-            - ./docker/mysql/env
+            - ./docker/env
         tty: true
         stdin_open: true
         privileged: true
+        command: bash -c "uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
 
     # phpMyAdmin dev
-    phpmyadmin:
-        container_name: dev_phpmyadmin
-        image: phpmyadmin/phpmyadmin
-        environment:
-            - PMA_ARBITRARY=1
-            - PMA_HOSTS=tax_stopper_db
-            - PMA_USER=root
-            - PMA_PASSWORD=root
-        ports:
-            - 3000:80
+    # phpmyadmin:
+    #     container_name: dev_phpmyadmin
+    #     image: phpmyadmin/phpmyadmin
+    #     environment:
+    #         - PMA_ARBITRARY=1
+    #         - PMA_HOSTS=tax_stopper_db
+    #         - PMA_USER=root
+    #         - PMA_PASSWORD=root
+    #     ports:
+    #         - 3000:80

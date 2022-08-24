@@ -20,7 +20,7 @@ checkDir $CURRENT
 cd $CURRENT
 
 echo -e "\nRun build...\n"
-npm run build
+npm run prod-build
 
 checkDir docs
 cd docs

@@ -7,3 +7,6 @@ dist
 
 memo
 !.gitkeep
+
+__pycache__
+env

@@ -21,16 +21,32 @@ class InsertType(BaseModel):
     income1 : int = 0
     income2 : int = 0
 
-@app.get("/paycheck/")
+@app.get("/api/paycheck/")
 def getAll():
-    return model_pay.getAll()
+    res = model_pay.getAll()
+    return res if res else None
 
-@app.post("/paycheck/")
+@app.post("/api/paycheck/")
 async def register(item : InsertType):
-    print(item)
     return model_pay.register(
         year = item.year,
         month = item.month,
         income1 = item.income1,
         income2 = item.income2
+    )
+
+@app.put("/api/paycheck/update")
+async def update(item : InsertType):
+    return model_pay.update(
+        year = item.year,
+        month = item.month,
+        income1 = item.income1,
+        income2 = item.income2
+    )
+
+@app.post("/api/paycheck/delete")
+async def delete(item : InsertType):
+    return model_pay.delete(
+        year = item.year,
+        month = item.month,
     )

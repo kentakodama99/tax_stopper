@@ -33,6 +33,19 @@ class modelPay:
 
     def register(self, year, month, income1 = 0, income2 = 0):
         with self.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
-            sql = f"insert into paycheck values('{str(year)}', '{str(month)}', {str(income1)}, {str(income2)})"
+            sql = f"INSERT INTO {MYSQL_TABLE} values({year}, {month}, {income1}, {income2})"
+            cursor.execute(sql)
+            self.connection.commit()
+    
+    def update(self, year, month, income1, income2):
+        with self.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
+            sql = f"UPDATE {MYSQL_TABLE} SET income1 = {income1}, income2 = {income2} "
+            sql += f"WHERE year = {year} AND month = {month}"
+            cursor.execute(sql)
+            self.connection.commit()
+    
+    def delete(self, year, month):
+        with self.connection.cursor(MySQLdb.cursors.DictCursor) as cursor:
+            sql = f"DELETE FROM {MYSQL_TABLE} WHERE year = {year} AND month = {month}"
             cursor.execute(sql)
             self.connection.commit()
