@@ -77,15 +77,35 @@
         </v-card>
       </v-col>
     </v-row>
+    <table>
+      <tr>
+        <th><span>年</span></th>
+        <th><span>月</span></th>
+        <th><span>income1</span></th>
+        <th><span>income2</span></th>
+      </tr>
+      <tr v-for="(item,index) in items" :key="index">
+        <td><p>{{item.year}}</p></td>
+        <td><p>{{item.month}}</p></td>
+        <td><p>{{item.income1}}</p></td>
+        <td><p>{{item.income2}}</p></td>
+      </tr>
+    </table>
   </v-container>
 </template>
 
 <script lang="ts">
-  import Vue from 'vue'
+  import Vue from 'vue';
+  import { client } from '../client'
 
+  export type ItemsType = {
+    year : number,
+    month : number,
+    income1 : number,
+    income2 : number
+  }
   export type DataType = {
     sum_money : number,
-    strict_money : number,
     add : {
       dialog : boolean,
       year : number,
@@ -93,20 +113,22 @@
       income1 : number,
       income2 : number
     },
+    items : ItemsType[],
   }
+
   export default Vue.extend({
     name: 'Home',
     data(): DataType {
       return {
         sum_money : 500000,
-        strict_money : 0,
         add:{
           dialog : false,
           year : 2022,
           month : 1,
           income1 : 0,
           income2 : 0,
-        }
+        },
+        items : []
       }
     },
     computed: {
@@ -120,11 +142,27 @@
       },
     },
     created() {
-      this.strict_money = this.sum_money
+      this.getData()
     },
     methods: {
-      scrictParcent() : void {
-        this.sum_money = this.strict_money
+      getData() : void {
+        const endpoint = "paycheck"
+        client.get(endpoint).then(res => {
+          const data : ItemsType[] = res.data
+          this.items = []
+          this.sum_money = 0
+          data.forEach(e   => { 
+            this.items.push({
+              year : Number(e.year),
+              month : Number(e.month),
+              income1 : Number(e.income1),
+              income2 : Number(e.income2),
+                })
+              this.sum_money += e.income1;
+              this.sum_money += e.income2;
+              })
+            
+        })
       },
       submitInputData() : void {
         if(this.add.year && this.add.month) {
@@ -137,7 +175,15 @@
           if (confirm("本当によろしいでしょうか？\n" +
           this.add.year + "/" + this.add.month + "\n" +
           "アルバイト1 : " + this.add.income1 + "\n" + "アルバイト2 : " + this.add.income2)) {
-            this.sum_money += this.add.income1 + this.add.income2
+            const endpoint = "paycheck"
+            const data = {
+              "year" : this.add.year,
+              "month" : this.add.month,
+              "income1" : this.add.income1,
+              "income2" : this.add.income2
+            }
+            client.post(endpoint, data).then(response => console.log(response))
+            this.getData()
             this.closeInputDialog()
           }
         } else {
