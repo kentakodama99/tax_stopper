@@ -1,21 +1,24 @@
 103万超えたくない<br>
 [https://kentakodama99.github.io/tax_stopper/](https://kentakodama99.github.io/tax_stopper/)
 
-##### 環境
+### 環境
 自宅サーバ前提
-* db
-MySQL
-* frontend
+#### db
   
-vuecli
+* MySQL
   
-* backend
+#### frontend
   
-python(fastapi)
+* vuecli
   
-* その他使ったもの
+#### backend
   
-Docker, phpMyAdmin(db確認用)
+* python(fastapi)
+  
+#### その他使ったもの
+  
+* Docker
+* phpMyAdmin(db確認用)
 ##### 設定項目
 * docker/env
 ```
