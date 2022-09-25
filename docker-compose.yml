@@ -30,7 +30,7 @@ services:
         container_name: tax_stopper_backend
         build: ./docker/py
         ports:
-            - 8000:8000
+            - 8000:50201
         volumes:
             - ./src/backend:/py/
         env_file:
@@ -38,7 +38,7 @@ services:
         tty: true
         stdin_open: true
         privileged: true
-        command: bash -c "uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+        command: bash -c "uvicorn main:app --host 0.0.0.0 --port 50201 --reload"
 
     # phpMyAdmin dev
     # phpmyadmin:
